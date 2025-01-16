@@ -1,28 +1,26 @@
-let userAnswers1 = ["", "", "", "", "", "", ""]; // Array to store answers for 7 boxes (Top row)
-let userAnswers2 = ["", "", "", "", "", "", "", "", ""]; // Array to store answers for 9 boxes (Bottom row)
-let feedbacks1 = ["", "", "", "", "", "", ""]; // Feedback for top row
-let feedbacks2 = ["", "", "", "", "", "", "", "", ""]; // Feedback for bottom row
+let userAnswers1 = ["", "", "", "", "", ""]; // Array to store answers for 7 boxes (Top row)
+let userAnswers2 = ["", "", "", "", "", "", "", ""]; // Array to store answers for 9 boxes (Bottom row)
+let feedbacks1 = ["", "", "", "", "", ""]; // Feedback for top row
+let feedbacks2 = ["", "", "", "", "", "", "", ""]; // Feedback for bottom row
 
 let questions1 = [
   ["0", "1", "1", "0"], // Top row questions
   ["0", "0", "0", "1"],
-  ["0", "0", "0", "1"],
-  ["1", "0", "1", "0"],
-  ["0", "0", "0", "1"],
   ["1", "1", "1", "0"],
-  ["1", "0", "0", "1"],
+  ["1", "1", "1", "0"],
+  ["0", "1", "0", "0"],
+  ["1", "0", "0", "1"]
 ];
 
 let questions2 = [
   ["1", "0", "0", "0"], // Bottom row questions
   ["0", "0", "0", "0"],
   ["1", "1", "1", "0"],
-  ["1", "0", "1", "0"],
-  ["1", "1", "0", "0"],
   ["0", "1", "1", "0"],
-  ["0", "0", "0", "0"],
-  ["1", "1", "0", "0"],
-  ["1", "1", "1", "0"]
+  ["0", "1", "0", "0"],
+  ["1", "0", "0", "0"],
+  ["1", "1", "1", "0"],
+  ["0", "0", "1", "0"],
 ];
 
 let currentBox = 0; // To track the currently selected box
@@ -37,7 +35,7 @@ function setup() {
   loop(); // Ensure the draw function loops continuously
 
   // Create link reference
-  let link = createA('https://coordinates-converter.com/', 'Visit Coordinates Converter');
+  let link = createA('https://www.google.com/maps/', 'Mari Lihat Lokasinya');
   link.position(width / 2 - 100, height - 150); // Position at the bottom center
   link.style('font-size', '18px');
   link.style('color', '#007BFF'); // Link color
@@ -48,7 +46,7 @@ function draw() {
   background(240);
 
   // Display the top row of input boxes
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < 6; i++) {
     fill(255);
     rect(width / 2 - 375 + i * 120, height / 2 - 130, 100, 30); // Top row boxes
     fill(0);
@@ -69,7 +67,7 @@ function draw() {
   textSize(20);
 
   // Display the bottom row of input boxes
-  for (let i = 0; i < 9; i++) {
+  for (let i = 0; i < 8; i++) {
     fill(255);
     rect(width / 2 - 445 + i * 110, height / 2 + 20, 90, 30); // Bottom row boxes
     fill(0);
@@ -88,13 +86,13 @@ function draw() {
 
 function keyPressed() {
   if (keyCode === BACKSPACE) {
-    if (currentBox < 7) {
+    if (currentBox < 6) {
       userAnswers1[currentBox] = userAnswers1[currentBox].slice(0, -1); // Top row
     } else {
-      userAnswers2[currentBox - 7] = userAnswers2[currentBox - 7].slice(0, -1); // Bottom row
+      userAnswers2[currentBox - 6] = userAnswers2[currentBox - 6].slice(0, -1); // Bottom row
     }
   } else if (keyCode === ENTER) {
-    if (currentBox < 7) {
+    if (currentBox < 6) {
       if (checkAnswer1(currentBox)) {
         feedbacks1[currentBox] = "Correct!";
         currentBox++;
@@ -102,7 +100,7 @@ function keyPressed() {
         feedbacks1[currentBox] = "Incorrect!";
       }
     } else {
-      let boxIndex = currentBox - 7;
+      let boxIndex = currentBox - 6;
       if (checkAnswer2(boxIndex)) {
         feedbacks2[boxIndex] = "Correct!";
         currentBox++;
@@ -111,21 +109,21 @@ function keyPressed() {
       }
     }
   } else if (key.length === 1) {
-    if (currentBox < 7) {
+    if (currentBox < 6) {
       userAnswers1[currentBox] += key; // Top row input
     } else {
-      userAnswers2[currentBox - 7] += key; // Bottom row input
+      userAnswers2[currentBox - 6] += key; // Bottom row input
     }
   }
   redraw();
 }
 
 function checkAnswer1(boxIndex) {
-  let correctAnswers1 = ["6", "8", "8", "5", "8", "7", "9"]; // Correct answers for top row
+  let correctAnswers1 = ["6", "9", "0", "7", "8", "9"]; // Correct answers for top row
   return userAnswers1[boxIndex] === correctAnswers1[boxIndex];
 }
 
 function checkAnswer2(boxIndex) {
-  let correctAnswers2 = ["1", "0", "7", "5", "3", "6", "0", "3", "7"]; // Correct answers for bottom row
+  let correctAnswers2 = ["1", "0", "7", "6", "2", "1", "7", "4"]; // Correct answers for bottom row
   return userAnswers2[boxIndex] === correctAnswers2[boxIndex];
 }
